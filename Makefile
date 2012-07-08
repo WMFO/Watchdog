@@ -14,6 +14,7 @@ LIVEFILES = $(INSTALLDIR)/$($WATCHDOG) $(INSTALLDIR)/$(STARTLISTENBOT)
 
 .PHONY all
 all:
+	@echo "No default action. Try 'sudo make install' to install script."
 
 .PHONY: install
 install: $(INSTALLDIR)/$(WATCHDOG) $(INSTALLDIR)/$(STARTLISTENBOT)
