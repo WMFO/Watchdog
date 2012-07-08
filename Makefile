@@ -7,9 +7,9 @@ INSTALLDIR=/opt/wmfo/watchdog/
 LOCFILES=watchdog2.sh start-listenbot.sh
 REMFILES=$(INSTALLDIR)watchdog2.sh $(INSTALLDIR)start-listenbot.sh
 
-all:
+all: install
 
-install: all
+install:
 	cp $(LOCFILES) $(INSTALLDIR)
 	chown root $(REMFILES)
 	chmod 755 $(REMFILES)
