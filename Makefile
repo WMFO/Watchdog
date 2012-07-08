@@ -3,8 +3,8 @@
 #Bash scripts aren't compiled, but used for install
 
 INSTALLDIR=/opt/wmfo/
-LOCFILES=watchdog2.sh startlistenbot.sh
-REMFILES=$(INSTALLDIR)watchdog2.sh $(INSTALLDIR)startlistenbot.sh
+LOCFILES=watchdog2.sh start-listenbot.sh
+REMFILES=$(INSTALLDIR)watchdog2.sh $(INSTALLDIR)start-listenbot.sh
 
 all:
 
