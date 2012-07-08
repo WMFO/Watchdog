@@ -1,8 +1,9 @@
 #Makefile for Watchdog
-#Typical usage: sudo make install
 #Bash scripts aren't compiled, but used for install
+#Typical usage: git pull
+#				sudo make install
 
-INSTALLDIR=/opt/wmfo/
+INSTALLDIR=/opt/wmfo/watchdog/
 LOCFILES=watchdog2.sh start-listenbot.sh
 REMFILES=$(INSTALLDIR)watchdog2.sh $(INSTALLDIR)start-listenbot.sh
 
