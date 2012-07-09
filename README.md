@@ -8,7 +8,7 @@ Contact: ops@wmfo.org
 A watchdog script to make sure the webstream is running and that the
 rivendell shares are mounted.
 
-Usage: watchdog2.sh <log_file>
+Usage: watchdog2.sh `<log_file>`
 
 For coprights and licensing, see COPYING.
 
@@ -22,7 +22,7 @@ Made log file far less verbose. Now logs only on errors.
 Includes date. - Andy Sayler
 
 ###10/24/11
-Branched from watchdog.sh to watchdog2.sh - A Sayler
+Branched from watchdog.sh to watchdog2.sh - Andy Sayler
 
 ###10/24/11
 Added automatic unmounting on detection of multiple mounts. - Andy Sayler
