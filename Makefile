@@ -4,24 +4,33 @@
 #                 sudo make install
 
 INSTALLDIR = /opt/wmfo/watchdog
-FILES = watchdog2.sh start-listenbot.sh
+OWNER = root
+MOD = 755
+WATCHDOG = watchdog2.sh
+STARTLISTENBOT = start-listenbot.sh
+FILES = $(WATCHDOG) $(STARTLISTENBOT) 
 
 .PHONY all
 all:
 	@echo "make: nothing to build for bash scripts"
 	@echo "make: suggested usage: sudo make install"
 
-.PHONY install
-install: 
-	for file in $(FILES) ; do \
-	cp $$file $(INSTALLDIR)/$$file ; \
-	chown root $(INSTALLDIR)/$$file ; \
-	chmod 755 $(INSTALLDIR)/$$file ; \
-	done
+.PHONY: install
+install: $(INSTALLDIR)/$(WATCHDOG) $(INSTALLDIR)/$(STARTLISTENBOT)
+
+$(INSTALLDIR)/$(WATCHDOG): $(WATCHDOG)
+	cp $< $@
+	chown $(OWNER) $@
+	chmod $(MOD) $@
+
+$(INSTALLDIR)/$(STARTLISTENBOT): $(STARTLISTENBOT)
+	cp $< $@
+	chown $(OWNER) $@
+	chmod $(MOD) $@
 
 .PHONY uninstall
 uninstall: 
-	for file in $(FILES) ; do \
-	rm $(INSTALLDIR)/$$file ; \
+	for file in $(FILES); do \
+	$(RM) $(INSTALLDIR)/$$file ; \
 	done
 
