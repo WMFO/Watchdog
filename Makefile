@@ -1,34 +1,27 @@
 #Makefile for Watchdog
 #Bash scripts aren't compiled, but used for install
-#Typical usage: git pull
-#               sudo make install
+#Suggested usage: git pull
+#                 sudo make install
 
 INSTALLDIR = /opt/wmfo/watchdog
-OWNER = root
-MOD = 755
-WATCHDOG = watchdog2.sh
-STARTLISTENBOT = start-listenbot.sh
-LOCFILES = $(WATCHDOG) $(STARTLISTENBOT)
-LIVEFILES = $(INSTALLDIR)/$($WATCHDOG) $(INSTALLDIR)/$(STARTLISTENBOT)
-
+FILES = watchdog2.sh start-listenbot.sh
 
 .PHONY all
 all:
-	@echo "No default action. Try 'sudo make install' to install script."
+	@echo "make: nothing to build for bash scripts"
+	@echo "make: suggested usage: sudo make install"
 
-.PHONY: install
-install: $(INSTALLDIR)/$(WATCHDOG) $(INSTALLDIR)/$(STARTLISTENBOT)
+.PHONY install
+install: 
+	for file in $(FILES) ; do \
+	cp $$file $(INSTALLDIR)/$$file ; \
+	chown root $(INSTALLDIR)/$$file ; \
+	chmod 755 $(INSTALLDIR)/$$file ; \
+	done
 
-.PHONY: uninstall
-uninstall:
-	$(RM) $(LIVEFILES)
+.PHONY uninstall
+uninstall: 
+	for file in $(FILES) ; do \
+	rm $(INSTALLDIR)/$$file ; \
+	done
 
-$(INSTALLDIR)/$(WATCHDOG): $(WATCHDOG)
-	cp $< $@
-	chown $(OWNER) $@
-	chmod $(MOD) $@
-
-$(INSTALLDIR)/$(STARTLISTENBOT): $(STARTLISTENBOT)
-	cp $< $@
-	chown $(OWNER) $@
-	chmod $(MOD) $@
