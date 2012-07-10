@@ -18,15 +18,16 @@ all:
 .PHONY: install
 install: $(INSTALLDIR)/$(WATCHDOG) $(INSTALLDIR)/$(STARTLISTENBOT)
 
+installFile =
+	cp $(1) $(2)
+	chown $(OWNER) $(2)
+	chmod $(MOD) $(2)
+
 $(INSTALLDIR)/$(WATCHDOG): $(WATCHDOG)
-	cp $< $@
-	chown $(OWNER) $@
-	chmod $(MOD) $@
+	$(call installFile,$<,$@)
 
 $(INSTALLDIR)/$(STARTLISTENBOT): $(STARTLISTENBOT)
-	cp $< $@
-	chown $(OWNER) $@
-	chmod $(MOD) $@
+	$(call installFile,$<,$@)
 
 .PHONY uninstall
 uninstall: 
