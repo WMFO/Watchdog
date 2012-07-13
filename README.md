@@ -1,16 +1,13 @@
 Watchdog
 ========
-
-WMFO - Tufts Freeform Radio
-
-Contact: ops@wmfo.org
+WMFO - Tufts Freeform Radio  
+ops@wmfo.org  
+For copyrights and licensing, see COPYING.
 
 A watchdog script to make sure the webstream is running and that the
 rivendell shares are mounted.
 
 Usage: watchdog2.sh `<log_file>`
-
-For coprights and licensing, see COPYING.
 
 Changelog
 ---------

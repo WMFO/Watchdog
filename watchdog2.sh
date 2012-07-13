@@ -120,7 +120,7 @@ handle_status ()
         echo `date` >> $log_file
         echo "The external NIC has no IP. Resetting..." >> $log_file
         ifconfig eth1 down
-        ifconfig eht1 up
+        ifconfig eth1 up
         nic_external=`ifconfig | grep 130.64  | wc -l`
     fi
 
@@ -130,7 +130,7 @@ handle_status ()
         echo `date` >> $log_file
         echo "The internal NIC has no IP. Resetting..." >> $log_file
         ifconfig eth0 down
-        ifconfig eht0 up
+        ifconfig eth0 up
         nic_internal=`ifconfig | grep 192.168  | wc -l`
     fi
 }
