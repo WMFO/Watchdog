@@ -12,7 +12,7 @@ Usage: watchdog2.sh `<log_file>`
 Changelog
 ---------
 ###??/??/??
-Initial version. - Ben Yu
+Initial version. - Benjamin Yu
 
 ###10/23/11
 Made log file far less verbose. Now logs only on errors. 
