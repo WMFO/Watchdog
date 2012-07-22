@@ -17,11 +17,12 @@ all:
 install: $(addprefix $(INSTALLDIR)/, $(FILES))
 
 $(INSTALLDIR)/%.sh: %.sh
+	mkdir -p $(INSTALLDIR)
 	@cp $< $@
 	@chown $(OWNER) $@
 	@chmod $(MOD) $@
 
-uninstall: 
+uninstall:
 	for file in $(FILES); do \
 	$(RM) $(INSTALLDIR)/$$file ; \
 	done
