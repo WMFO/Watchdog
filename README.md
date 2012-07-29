@@ -7,7 +7,11 @@ For copyrights and licensing, see COPYING.
 A watchdog script to make sure the webstream is running and that the
 rivendell shares are mounted.
 
-Usage: watchdog2.sh `<log_file>`
+Usage: `watchdog2.sh <log_file>`
+
+It is recomended you place something similar to the following 
+in root's crontab (`sudo crontab -e`):  
+`@reboot /opt/wmfo/watchdog/watchdog2.sh /var/log/watchdog2.log`
 
 Changelog
 ---------
@@ -15,7 +19,7 @@ Changelog
 Initial version. - Benjamin Yu
 
 ###10/23/11
-Made log file far less verbose. Now logs only on errors. 
+Made log file far less verbose. Now logs only on errors.
 Includes date. - Andy Sayler
 
 ###10/24/11

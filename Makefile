@@ -17,7 +17,7 @@ all:
 install: $(addprefix $(INSTALLDIR)/, $(FILES))
 
 $(INSTALLDIR)/%.sh: %.sh
-	mkdir -p $(INSTALLDIR)
+	@mkdir -p $(INSTALLDIR)
 	@cp $< $@
 	@chown $(OWNER) $@
 	@chmod $(MOD) $@
