@@ -125,8 +125,8 @@ handle_status ()
     then
         echo `date` >> $log_file
         echo "The external NIC has no IP. Resetting..." >> $log_file
-        ifconfig nic_external_eth down
-        ifconfig nic_external_eth up
+        ifconfig $nic_external_eth down
+        ifconfig $nic_external_eth up
         nic_external_count=`ifconfig | grep $nic_external_ip  | wc -l`
     fi
 
