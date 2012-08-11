@@ -4,8 +4,8 @@ WMFO - Tufts Freeform Radio
 ops@wmfo.org  
 For copyrights and licensing, see COPYING.
 
-A watchdog script to make sure the webstream is running and that the
-rivendell shares are mounted.
+A watchdog script to make sure the webstream processes are running, that the
+rivendell shares are mounted, and the NICs are conencted to the network.
 
 Usage: `watchdog2.sh <log_file>`
 
@@ -42,3 +42,8 @@ Add checks to restart external and internal NICs in case no IP
 is detected. This assumes that, under normal operation, 
 eth0 has a 192.168 address and eth1 has a 130.64 (Tufts network)
 address. - Max Goldstein
+
+###08/11/12
+Make NIC handling code smarter. Now runs only every 30 seconds,
+stops trying to handle it after 3 consecutive failures, and does
+nothing on restart until the NIC has connected successfully. - Max Goldstein

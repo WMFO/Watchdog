@@ -9,6 +9,9 @@ nic_external_ip=`echo 130.64`
 nic_external_eth=`echo eth1`
 nic_internal_ip=`echo 192.168`
 nic_internal_eth=`echo eth0`
+nic_timeout=3
+nic_external_tries=$nic_timeout
+nic_internal_tries=$nic_timeout
 
 check_status ()
 {
@@ -27,8 +30,8 @@ check_status ()
     var_backup_cnt=`mount -l | grep /var/backup | wc -l`
 
     #Do the same for the NICs
-    nic_external_count=`ifconfig | grep $nic_external_ip | wc -l`
-    nic_internal_count=`ifconfig | grep $nic_internal_ip | wc -l`
+    nic_external_count=`ifconfig $nic_external_eth | grep $nic_external_ip | wc -l`
+    nic_internal_count=`ifconfig $nic_internal_eth | grep $nic_internal_ip | wc -l`
 
     #Check to see if rivendell daemons are running.
     test -e /var/run/rivendell/caed.pid
@@ -45,7 +48,7 @@ handle_status ()
     rd_daemons=`expr $rd_daemons + $rdcatchd`
     if test 0 -ne $rd_daemons
     then
-            echo `date` >> $log_file
+        echo `date` >> $log_file
         echo "Rivendell daemons are not running. Restarting..." >> $log_file
         /etc/init.d/rivendell restart
     fi
@@ -80,7 +83,6 @@ handle_status ()
         echo `date` >> $log_file
         echo "/var/snd is not mounted. Mounting..." >> $log_file
         mount /var/snd
-        var_snd_cnt=`mount -l | grep /var/snd | wc -l`
     fi
 
         # --- Handle var/import mount issues ---
@@ -98,7 +100,6 @@ handle_status ()
         echo `date` >> $log_file
         echo "/var/import is not mounted. Mounting..." >> $log_file
         mount /var/import
-        var_import_cnt=`mount -l | grep /var/import | wc -l`
     fi
 
        # --- Handle var/backup mount issues ---
@@ -116,28 +117,42 @@ handle_status ()
         echo `date` >> $log_file
         echo "/var/backup is not mounted. Mounting..." >> $log_file
         mount /var/backup
-        var_backup_cnt=`mount -l | grep /var/backup | wc -l`
     fi
 
+}
+
+handle_NICs ()
+{
     # --- Handle external NIC issues ---
 
-    if [ $nic_external_count -lt 1 ]
+    if [ $nic_external_count -lt 1 ] && [$nic_external_tries -lt $nic_timeout]
     then
         echo `date` >> $log_file
         echo "The external NIC has no IP. Resetting..." >> $log_file
         ifconfig $nic_external_eth down
         ifconfig $nic_external_eth up
-        nic_external_count=`ifconfig | grep $nic_external_ip  | wc -l`
+        $nic_external_tries+=1
     fi
 
+    if [ $nic_external_count -gt 0 ]
+    then
+        $nic_external_tries=0
+    fi
 
-    if [ $nic_internal_count -lt 1 ]
+    # --- Handle internal NIC issues ---
+
+    if [ $nic_internal_count -lt 1 ] && [$nic_internal_tries -lt $nic_timeout]
     then
         echo `date` >> $log_file
         echo "The internal NIC has no IP. Resetting..." >> $log_file
         ifconfig $nic_internal_eth down
         ifconfig $nic_internal_eth up
-        nic_internal_count=`ifconfig | grep $nic_internal_ip  | wc -l`
+        $nic_internal_tries+=1
+    fi
+
+    if [ $nic_internal_count -gt 0 ]
+    then
+        $nic_internal_tries=0
     fi
 }
 
@@ -148,20 +163,30 @@ fi
 
 export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games
 
+nic_step=0
+
+echo `date` >> $log_file
+echo "Watchdog has been restarted." >> $log_file
+
 sleep 10
 
 while test 0 -eq 0
 do
-        # Setup log file
     if test -z $log_file
     then
         log_file=/dev/null
     fi
 
-    # Run and handle system checks
     check_status
     handle_status
 
-    # Sleep for 10 seconds
+    #Check NICs less often
+    if [ $nic_step -eq 0 ]
+    then
+        handle_NICs
+    fi
+    nic_step+=1
+    nic_step%=3
+
     sleep 10
 done
