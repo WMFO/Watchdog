@@ -129,8 +129,8 @@ handle_NICs ()
     then
         echo `date` >> $log_file
         echo "The external NIC has no IP. Resetting..." >> $log_file
-        ifconfig $nic_external_eth down
-        ifconfig $nic_external_eth up
+        ifdown $nic_external_eth
+        ifup   $nic_external_eth
         $nic_external_tries+=1
     fi
 
@@ -145,8 +145,8 @@ handle_NICs ()
     then
         echo `date` >> $log_file
         echo "The internal NIC has no IP. Resetting..." >> $log_file
-        ifconfig $nic_internal_eth down
-        ifconfig $nic_internal_eth up
+        ifdown $nic_internal_eth
+        ifup   $nic_internal_eth
         $nic_internal_tries+=1
     fi
 
