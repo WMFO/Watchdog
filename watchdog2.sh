@@ -125,7 +125,7 @@ handle_NICs ()
 {
     # --- Handle external NIC issues ---
 
-    if [ $nic_external_count -lt 1 ] && [$nic_external_tries -lt $nic_timeout]
+    if [ $nic_external_count -lt 1 ] && [ $nic_external_tries -lt $nic_timeout ]
     then
         echo `date` >> $log_file
         echo "The external NIC has no IP. Resetting..." >> $log_file
@@ -141,7 +141,7 @@ handle_NICs ()
 
     # --- Handle internal NIC issues ---
 
-    if [ $nic_internal_count -lt 1 ] && [$nic_internal_tries -lt $nic_timeout]
+    if [ $nic_internal_count -lt 1 ] && [ $nic_internal_tries -lt $nic_timeout ]
     then
         echo `date` >> $log_file
         echo "The internal NIC has no IP. Resetting..." >> $log_file
