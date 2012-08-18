@@ -131,12 +131,12 @@ handle_NICs ()
         echo "The external NIC has no IP. Resetting..." >> $log_file
         ifdown $nic_external_eth
         ifup   $nic_external_eth
-        $nic_external_tries+=1
+        let nic_external_tries+=1
     fi
 
     if [ $nic_external_count -gt 0 ]
     then
-        $nic_external_tries=0
+        let nic_external_tries=0
     fi
 
     # --- Handle internal NIC issues ---
@@ -147,12 +147,12 @@ handle_NICs ()
         echo "The internal NIC has no IP. Resetting..." >> $log_file
         ifdown $nic_internal_eth
         ifup   $nic_internal_eth
-        $nic_internal_tries+=1
+        let nic_internal_tries+=1
     fi
 
     if [ $nic_internal_count -gt 0 ]
     then
-        $nic_internal_tries=0
+        let nic_internal_tries=0
     fi
 }
 
@@ -163,7 +163,7 @@ fi
 
 export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games
 
-nic_step=0
+let nic_step=0
 
 echo `date` >> $log_file
 echo "Watchdog has been restarted." >> $log_file
@@ -185,8 +185,8 @@ do
     then
         handle_NICs
     fi
-    nic_step+=1
-    nic_step%=3
+    let nic_step+=1
+    let nic_step%=3
 
     sleep 10
 done
