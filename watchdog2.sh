@@ -177,13 +177,13 @@ do
         log_file=/dev/null
     fi
 
-    check_status
-    handle_status
+    check_status >> $log_file 2>&1
+    handle_status >> $log_file 2>&1
 
     #Check NICs less often
     if [ $nic_step -eq 0 ]
     then
-        handle_NICs
+        handle_NICs >> $log_file 2>&1
     fi
     let nic_step+=1
     let nic_step%=3
