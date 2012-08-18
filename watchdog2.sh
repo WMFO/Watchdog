@@ -5,10 +5,10 @@
 # For copyright and licensing, see COPYING
 
 #NIC constants
-nic_external_ip=`echo 130.64`
-nic_external_eth=`echo eth1`
-nic_internal_ip=`echo 192.168`
-nic_internal_eth=`echo eth0`
+nic_external_ip="130.64"
+nic_external_eth="eth1"
+nic_internal_ip="192.168"
+nic_internal_eth="eth0"
 nic_timeout=3
 nic_external_tries=$nic_timeout
 nic_internal_tries=$nic_timeout
